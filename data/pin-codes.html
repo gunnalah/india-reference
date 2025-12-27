@@ -1,29 +1,85 @@
 <!DOCTYPE html>
 <html>
-<<title>India PIN Codes – State & District Wise List</title>
-<meta name="description" content="Find India PIN codes with state, district and post office details. Updated and accurate postal information.">
-<meta name="keywords" content="India PIN codes, postal codes India, pincode list">
-<meta name="robots" content="index, follow">
->
-    <title>India PIN Codes</title>
-    <link rel="stylesheet" href="../css/style.css">
+<head>
+  <title>India PIN Code Search</title>
+  <meta name="description" content="Search India PIN Codes by state and district.">
+  <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
 
-<header><h1>India PIN Codes</h1></header>
+<header>
+  <h1>India PIN Code Search</h1>
+</header>
 
-<section class="content">
-<table border="1" width="100%">
-<tr><th>State</th><th>District</th><th>Post Office</th><th>PIN</th></tr>
-<tr><td>Telangana</td><td>Hyderabad</td><td>Gachibowli</td><td>500032</td></tr>
-<tr><td>Maharashtra</td><td>Pune</td><td>Shivajinagar</td><td>411005</td></tr>
-</table>
-</section>
+<div class="content">
+
+  <label>Select State:</label><br>
+  <select id="state" onchange="loadDistricts()">
+    <option value="">-- Select State --</option>
+    <option value="telangana">Telangana</option>
+    <option value="maharashtra">Maharashtra</option>
+  </select>
+
+  <br><br>
+
+  <label>Select District:</label><br>
+  <select id="district" onchange="showPincode()">
+    <option value="">-- Select District --</option>
+  </select>
+
+  <br><br>
+
+  <div id="result"></div>
+
+</div>
 
 <footer>
-    <a href="../index.html">← Back to Home</a>
+  <a href="../../index.html">← Back to Home</a>
 </footer>
+
+<script>
+const data = {
+  telangana: {
+    Hyderabad: ["500032", "500081", "500072"],
+    "Ranga Reddy": ["501218", "501301"]
+  },
+  maharashtra: {
+    Pune: ["411001", "411005"],
+    Mumbai: ["400001", "400002"]
+  }
+};
+
+function loadDistricts() {
+  const state = document.getElementById("state").value;
+  const districtSelect = document.getElementById("district");
+  districtSelect.innerHTML = "<option value=''>-- Select District --</option>";
+
+  if (!state) return;
+
+  Object.keys(data[state]).forEach(district => {
+    let opt = document.createElement("option");
+    opt.value = district;
+    opt.textContent = district;
+    districtSelect.appendChild(opt);
+  });
+}
+
+function showPincode() {
+  const state = document.getElementById("state").value;
+  const district = document.getElementById("district").value;
+  const result = document.getElementById("result");
+
+  if (!state || !district) return;
+
+  const pins = data[state][district];
+  result.innerHTML = `
+    <h3>PIN Codes:</h3>
+    <ul>
+      ${pins.map(pin => `<li>${pin}</li>`).join("")}
+    </ul>
+  `;
+}
+</script>
 
 </body>
 </html>
-
