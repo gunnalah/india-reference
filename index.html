@@ -6,6 +6,20 @@
     <meta name="description" content="India information like PIN codes, IFSC codes, RTO codes, STD codes, holidays and more.">
     <link rel="stylesheet" href="css/style.css">
 </head>
+<script>
+function searchData() {
+  let input = document.getElementById("searchBox").value.toLowerCase();
+  let items = document.querySelectorAll("li, tr");
+
+  items.forEach(item => {
+    if (item.innerText.toLowerCase().includes(input)) {
+      item.style.display = "";
+    } else {
+      item.style.display = "none";
+    }
+  });
+}
+</script>
 <body>
 
 <header>
@@ -43,6 +57,7 @@
 
 </body>
 </html>
+
 
 
 
